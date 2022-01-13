@@ -1,12 +1,7 @@
 # DiscordProfileBanner
-This tool generates a Discord profile banner image in realtime. I wrote it for use in [my AniList profile](https://anilist.co/user/Quanta/).
-
-An example in action:
-
-![generated image](https://discord-prof.herokuapp.com/banner/721012149933310029.png?b=1)
 
 ## How does it work?
-- A Discord bot connects to the Discord gatewaty.
+- A Discord bot connects to the Discord gateway.
 - A Ktor server accepts requests at path `/{id}.png` where `id` is the Discord user ID.
 - On each request, bot fetches requested user's profile and activity status and an image is generated which contains all of this info.
 
