@@ -6,4 +6,4 @@
 - On each request, bot fetches requested user's profile and activity status and an image is generated which contains all of this info.
 
 ## Licence
-This project is Licensed under MIT. Please check the [LICENSE](https://github.com/quanta-kt/DiscordProfileBanner/blob/master/LICENSE) file for details.
+This project is Licensed under MIT. Please check the [LICENSE](https://github.com/Tweak4141/profile/blob/master/LICENSE) file for details.
