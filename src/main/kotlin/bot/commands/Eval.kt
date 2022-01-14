@@ -21,7 +21,7 @@ object Eval : Command {
     override fun commandRequest(): ApplicationCommandRequest =
         ApplicationCommandRequest.builder()
             .name(name)
-            .description("Evaluate Nashorn code.")
+            .description("Evaluate code.")
             .addOption(ApplicationCommandOptionData.builder()
                 .name("code")
                 .description("Code to evaluate.")
@@ -60,14 +60,17 @@ object Eval : Command {
             result.printStackTrace()
 
             val cause = result.cause
-            if (cause == null)
+            if (cause == null) {
                 event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
-            else
+            } else {
                 event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
-        } else if (result != null)
+        } else if (result != null) {
             event.replyEphemeral("$response , result = $result")
         } else {
             event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
         }
+    } else {
+        event.replyEphemeral("$response , result = $result")
     }
 }
+
