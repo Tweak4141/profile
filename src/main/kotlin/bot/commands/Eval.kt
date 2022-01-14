@@ -6,8 +6,9 @@ import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.rest.util.ApplicationCommandOptionType
 import kotlinx.coroutines.reactor.awaitSingle
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import javax.script.ScriptEngine
+import javax.script.ScriptEngineManager
+import javax.script.ScriptException
 import utils.getOrNull
 import java.nio.channels.UnresolvedAddressException
 
@@ -17,7 +18,6 @@ import java.nio.channels.UnresolvedAddressException
  */
 object Eval : Command {
     override val name: String = "eval"
-
     override fun commandRequest(): ApplicationCommandRequest =
         ApplicationCommandRequest.builder()
             .name(name)
@@ -34,14 +34,37 @@ object Eval : Command {
         val userId = event.interaction.user.id.asLong()
         val ownerId = 440130952769830912
         val code_to_exec = event.getOption("code").getOrNull()?.value?.getOrNull()?.asString()
-        if (userId != ownerId) return event.replyEphemeral("You don't have access to this commmand.").awaitSingle()
+        private val manager = ScriptEngineManager()
+        val engine = manager.getEngineByExtension("kts")
+        
+        if (userId != ownerId) {
+        event.replyEphemeral("You don't have access to this command.").awaitSingle()
+        return;
+        }
         // Validate if code exists
         if (code_to_exec != null) {
-            try {
-                event.replyEphemeral(" Evaluated Successfully:\n```\n"+eval(code_to_exec)+" ```").awaitSingle()
-                } catch(e: error) {
-                event.replyEphemeral(" An exception was thrown:\n```\n"+error+" ```").awaitSingle()
-                }
+           val startTime = System.nanoTime()
+
+        val result = try {
+            engine.eval(imports + event.args)
+        } catch (e: ScriptException) {
+            e
+        }
+
+        val endTime = System.nanoTime()
+        val timeUsed = endTime - startTime
+
+        val response = "Executed in ${timeUsed}ns"
+        if (result is Exception) {
+            result.printStackTrace()
+
+            val cause = result.cause
+            if (cause == null)
+                event.replyError("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
+            else
+                event.replyError("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
+        } else if (result != null)
+            event.replySuccess("$response , result = $result")
         } else {
             event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
         }
