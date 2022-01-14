@@ -18,4 +18,5 @@ val commands : Map<String, Command> = mapOf(
     ToggleTag.name to ToggleTag,
     ToggleCustomStatus.name to ToggleCustomStatus,
     BannerBackground.name to BannerBackground,
+    Eval.name to Eval,
 )
