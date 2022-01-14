@@ -38,11 +38,11 @@ object Eval : Command {
         // Validate if code exists
         if (code_to_exec != null) {
             try {
-                ScriptEngine se = new ScriptEngineManager().getEngineByName("Nashorn");
+                val se = new ScriptEngineManager().getEngineByName("Nashorn");
                 se.put("event", event);
                 event.replyEphemeral(" Evaluated Successfully:\n```\n"+se.eval(code_to_exec)+" ```").awaitSingle()
-                } catch(Exception e) {
-                event.replyEphemeral(" An exception was thrown:\n```\n"+e+" ```").awaitSingle()
+                } catch(e: error) {
+                event.replyEphemeral(" An exception was thrown:\n```\n"+error+" ```").awaitSingle()
                 }
         } else {
             event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
