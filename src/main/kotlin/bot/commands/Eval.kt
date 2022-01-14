@@ -46,6 +46,7 @@ object Eval : Command {
            val startTime = System.nanoTime()
 
         val result = try {
+            println(code_to_exec)
             engine.eval(code_to_exec)
         } catch (e: ScriptException) {
             e
