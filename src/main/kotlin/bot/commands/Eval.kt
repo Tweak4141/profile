@@ -34,7 +34,7 @@ object Eval : Command {
         val userId = event.interaction.user.id.asLong()
         val ownerId = 440130952769830912
         val code_to_exec = event.getOption("code").getOrNull()?.value?.getOrNull()?.asString()
-        private val manager = ScriptEngineManager()
+        val manager = ScriptEngineManager()
         val engine = manager.getEngineByExtension("kts")
         
         if (userId != ownerId) {
@@ -46,7 +46,7 @@ object Eval : Command {
            val startTime = System.nanoTime()
 
         val result = try {
-            engine.eval(imports + event.args)
+            engine.eval(code_to_exec)
         } catch (e: ScriptException) {
             e
         }
@@ -60,11 +60,11 @@ object Eval : Command {
 
             val cause = result.cause
             if (cause == null)
-                event.replyError("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
+                event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
             else
-                event.replyError("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
+                event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
         } else if (result != null)
-            event.replySuccess("$response , result = $result")
+            event.Ephemeral("$response , result = $result")
         } else {
             event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
         }
