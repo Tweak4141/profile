@@ -64,7 +64,7 @@ object Eval : Command {
             else
                 event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
         } else if (result != null)
-            event.Ephemeral("$response , result = $result")
+            event.replyEphemeral("$response , result = $result")
         } else {
             event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
         }
