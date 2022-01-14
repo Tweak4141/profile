@@ -64,15 +64,16 @@ object Eval : Command {
 
             val cause = result.cause
             if (cause == null) {
-                event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
+                event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}");
             } else {
-                event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
-            } 
+                event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}");
+            }; 
         } else if (result != null) {
             event.replyEphemeral("$response , result = $result")
         } else {
             event.replyEphemeral("$response , result = $result")
         }
+      }
     }
 }
 
