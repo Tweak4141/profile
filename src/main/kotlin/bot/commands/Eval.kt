@@ -59,7 +59,7 @@ object Eval : Command {
         val timeUsed = endTime - startTime
 
         val response = "Executed in ${timeUsed}ns"
-        if (result is Exception) {
+        if (result is ScriptException) {
             result.printStackTrace()
 
             val cause = result.cause
