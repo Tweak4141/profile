@@ -16,7 +16,7 @@ import java.nio.channels.UnresolvedAddressException
 /**
  * Command to eval Nashorn code.
  */
-object Eval : Command {
+object Eval : Command { 
     override val name: String = "eval"
     override fun commandRequest(): ApplicationCommandRequest =
         ApplicationCommandRequest.builder()
@@ -41,6 +41,9 @@ object Eval : Command {
         event.replyEphemeral("You don't have access to this command.").awaitSingle()
         return;
         }
+        if (code_to_exec == null) {
+            event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
+        }
         // Validate if code exists
         if (code_to_exec != null) {
            val startTime = System.nanoTime()
@@ -64,13 +67,12 @@ object Eval : Command {
                 event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}")
             } else {
                 event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}")
+            } 
         } else if (result != null) {
             event.replyEphemeral("$response , result = $result")
         } else {
-            event.replyEphemeral("No code was provided, cancelling.").awaitSingle()
+            event.replyEphemeral("$response , result = $result")
         }
-    } else {
-        event.replyEphemeral("$response , result = $result")
     }
 }
 
