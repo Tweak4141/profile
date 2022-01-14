@@ -16,6 +16,7 @@ repositories {
 
 dependencies {
     // Server
+    runtimeOnly("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.4.10")
     implementation("io.ktor:ktor-server-core:1.6.3")
     implementation("io.ktor:ktor-server-netty:1.6.3")
     // Serialisation
