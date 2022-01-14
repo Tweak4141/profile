@@ -1,16 +1,13 @@
 package bot.commands
 
-import data.repository.BannerPreferenceRepository
+
 import discord4j.core.event.domain.interaction.SlashCommandEvent
 import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.rest.util.ApplicationCommandOptionType
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
 import kotlinx.coroutines.reactor.awaitSingle
-import org.koin.mp.KoinPlatformTools
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import utils.getOrNull
 import java.nio.channels.UnresolvedAddressException
 
