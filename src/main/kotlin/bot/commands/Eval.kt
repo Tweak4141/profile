@@ -38,9 +38,7 @@ object Eval : Command {
         // Validate if code exists
         if (code_to_exec != null) {
             try {
-                val se = new ScriptEngineManager().getEngineByName("Nashorn");
-                se.put("event", event);
-                event.replyEphemeral(" Evaluated Successfully:\n```\n"+se.eval(code_to_exec)+" ```").awaitSingle()
+                event.replyEphemeral(" Evaluated Successfully:\n```\n"+eval(code_to_exec)+" ```").awaitSingle()
                 } catch(e: error) {
                 event.replyEphemeral(" An exception was thrown:\n```\n"+error+" ```").awaitSingle()
                 }
