@@ -52,13 +52,13 @@ object Eval : Command {
             println(code_to_exec)
             engine.eval(code_to_exec)
             
-        val endTime = System.nanoTime()
+        } catch (e: Exception) {
+            event.replyEphemeral("Error: $e"); 
+        }
+          val endTime = System.nanoTime()
         val timeUsed = endTime - startTime
 
         val response = "Executed in ${timeUsed}ns"
-        } catch (e: ScriptException) {
-            event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}"); 
-        }
         if (result is ScriptException) {
             result.printStackTrace()
 
