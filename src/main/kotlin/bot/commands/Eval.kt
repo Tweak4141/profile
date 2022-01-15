@@ -53,7 +53,7 @@ object Eval : Command {
             engine.eval(code_to_exec)
             
         } catch (e: Exception) {
-            event.replyEphemeral("Error: $e"); 
+            event.replyEphemeral("Error: $e").awaitSingle()
         }
           val endTime = System.nanoTime()
         val timeUsed = endTime - startTime
@@ -64,14 +64,14 @@ object Eval : Command {
 
             val cause = result.cause
             if (cause == null) {
-                event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}");
+                event.replyEphemeral("$response with ${result.javaClass.simpleName}: ${result.message} on line ${result.stackTrace[0].lineNumber}").awaitSingle()
             } else {
-                event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}");
+                event.replyEphemeral("$response with ${cause.javaClass.simpleName}: ${cause.message} on line ${cause.stackTrace[0].lineNumber}").awaitSingle()
             }; 
         } else if (result != null) {
-            event.replyEphemeral("$response , result = $result")
+            event.replyEphemeral("$response , result = $result").awaitSingle()
         } else {
-            event.replyEphemeral("$response , result = $result")
+            event.replyEphemeral("$response , result = $result").awaitSingle()
         }
       }
     }
