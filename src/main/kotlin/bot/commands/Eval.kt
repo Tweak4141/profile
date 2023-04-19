@@ -6,12 +6,9 @@ import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.rest.util.ApplicationCommandOptionType
 import kotlinx.coroutines.reactor.awaitSingle
-import javax.script.ScriptEngine
-import javax.script.ScriptEngineManager
-import javax.script.ScriptException
 import utils.getOrNull
 import java.nio.channels.UnresolvedAddressException
-
+import javax.script.*
 
 /**
  * Command to eval Nashorn code.
@@ -35,7 +32,7 @@ object Eval : Command {
         val ownerId = 440130952769830912
         val code_to_exec = event.getOption("code").getOrNull()?.value?.getOrNull()?.asString()
         val manager = ScriptEngineManager()
-        val engine = manager.getEngineByExtension("kts")
+        val engine = manager.getEngineByExtension("kts")!!
         
         if (userId != ownerId) {
         event.replyEphemeral("You don't have access to this command.").awaitSingle()
